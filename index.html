@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>我的第一個網站</title>
+  <style>
+    body {
+      font-family: "微軟正黑體", "Microsoft JhengHei", sans-serif;
+      background-color: #f4f6f8;
+      color: #333;
+      margin: 0;
+      padding: 40px 20px;
+    }
+    .container {
+      max-width: 700px;
+      margin: 0 auto;
+      background-color: #fff;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    h1 { color: #2b6cb0; margin-top: 0; }
+    .box {
+      background-color: #eef6ff;
+      border-left: 5px solid #2b6cb0;
+      padding: 12px 16px;
+      border-radius: 0 8px 8px 0;
+      margin: 16px 0;
+    }
+    button {
+      background-color: #2b6cb0;
+      color: #fff;
+      border: none;
+      padding: 12px 24px;
+      font-size: 16px;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    button:hover { background-color: #22558f; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>👋 歡迎來到我的網站</h1>
+
+    <p>我是 <strong>國一學生</strong>，這是我的網站作業。</p>
+
+    <div class="box">
+      這是我的網址：<br>
+      <a href="https://panboy63.github.io/">https://panboy63.github.io/</a>
+    </div>
+
+    <h2>關於這個網站</h2>
+    <p>這個網頁使用 <strong>HTML</strong> 寫成，架放在 <strong>GitHub Pages</strong>（免費）。</p>
+
+    <h2>按一下按鈕試試看</h2>
+    <p>按鈕是用 <strong>JavaScript</strong> 做的，會顯示今天的日期：</p>
+    <button onclick="showDate()">顯示今天的日期</button>
+    <p id="dateArea"></p>
+
+    <h2>接下來要做什麼</h2>
+    <ul>
+      <li>加入免費 API（例如天氣 API）</li>
+      <li>學會用 Git 上傳更新網頁</li>
+      <li>把網頁變漂亮</li>
+    </ul>
+  </div>
+
+  <script>
+    function showDate() {
+      const today = new Date();
+      document.getElementById("dateArea").innerHTML =
+        "今天是 " + today.getFullYear() + " 年 " +
+        (today.getMonth() + 1) + " 月 " + today.getDate() + " 日";
+    }
+  </script>
+</body>
+</html>
