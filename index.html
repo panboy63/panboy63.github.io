@@ -20,7 +20,24 @@
       border-radius: 12px;
       box-shadow: 0 2px 8px rgba(0,0,0,0.1);
     }
+    .back-link {
+      display: inline-block;
+      margin-top: 8px;
+      padding: 12px 26px;
+      background-color: #2b6cb0;
+      color: #fff !important;
+      text-decoration: none;
+      font-weight: bold;
+      border-radius: 6px;
+      transition: background-color 0.2s;
+    }
+    .back-link:hover {
+      background-color: #22558f;
+      text-decoration: none;
+    }
+
     h1 { color: #2b6cb0; margin-top: 0; }
+    h2 { margin-top: 30px; }
     .box {
       background-color: #eef6ff;
       border-left: 5px solid #2b6cb0;
@@ -59,11 +76,16 @@
     <button onclick="showDate()">顯示今天的日期</button>
     <p id="dateArea"></p>
 
+    <h2>🌤️ 天氣查詢</h2>
+    <p>這是一個免費天氣查詢工具，可以查詢台灣 22 個縣市的天氣，
+       資料來自免費的公開 API：</p>
+    <p><a class="back-link" href="weather.html">🌤️ 前往天氣查詢</a></p>
+
     <h2>接下來要做什麼</h2>
     <ul>
-      <li>加入免費 API（例如天氣 API）</li>
-      <li>學會用 Git 上傳更新網頁</li>
-      <li>把網頁變漂亮</li>
+      <li>把網頁變漂亮、加上圖片和動畫</li>
+      <li>加入更多免費 API（例如即時空氣品質、地震）</li>
+      <li>學會用 Git 在電腦本機管理網頁檔案</li>
     </ul>
   </div>
 

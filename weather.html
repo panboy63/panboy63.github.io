@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>天氣查詢 - 我的網站</title>
+  <style>
+    body {
+      font-family: "微軟正黑體", "Microsoft JhengHei", sans-serif;
+      background-color: #4a90d9;
+      background-image: linear-gradient(160deg, #6ab0ea 0%, #3b7bbd 100%);
+      color: #333;
+      margin: 0;
+      padding: 30px 16px;
+      min-height: 100vh;
+    }
+    .container {
+      max-width: 760px;
+      margin: 0 auto;
+      background-color: #fff;
+      padding: 28px;
+      border-radius: 14px;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.2);
+    }
+    h1 { color: #2b6cb0; margin: 0 0 4px; }
+    .subtitle { color: #777; margin: 0 0 22px; font-size: 14px; }
+    .controls {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      align-items: center;
+      padding: 18px;
+      background-color: #eef6ff;
+      border-radius: 10px;
+    }
+    .controls label { font-weight: bold; }
+    select {
+      font-size: 16px;
+      padding: 10px 14px;
+      border: 2px solid #2b6cb0;
+      border-radius: 6px;
+      background-color: #fff;
+      min-width: 140px;
+    }
+    button {
+      background-color: #2b6cb0;
+      color: #fff;
+      border: none;
+      padding: 11px 24px;
+      font-size: 16px;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    button:hover:not(:disabled) { background-color: #22558f; }
+    button:disabled { background-color: #a0aec0; cursor: not-allowed; }
+
+    .back-link {
+      display: inline-block;
+      margin-top: 22px;
+      color: #2b6cb0;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    .back-link:hover { text-decoration: underline; }
+
+    /* 現在天氣 */
+    .weather-now { text-align: center; margin-top: 26px; }
+    .weather-now .city { font-size: 26px; font-weight: bold; color: #2b6cb0; }
+    .weather-now .update { font-size: 13px; color: #999; margin-bottom: 6px; }
+    .big-icon { font-size: 76px; line-height: 1.1; }
+    .big-temp { font-size: 46px; font-weight: bold; color: #333; }
+    .weather-text { font-size: 19px; color: #666; margin-bottom: 18px; }
+    table.info { margin: 0 auto; border-collapse: collapse; font-size: 15px; }
+    table.info th, table.info td {
+      border: 1px solid #ddd;
+      padding: 8px 20px;
+      text-align: left;
+    }
+    table.info th { background-color: #f5f7fa; color: #555; }
+
+    /* 未來預報 */
+    .forecast-title { color: #2b6cb0; font-size: 19px; margin-top: 34px; }
+    .forecast { display: flex; gap: 10px; flex-wrap: wrap; }
+    .day-card {
+      flex: 1 1 120px;
+      background-color: #f7fbff;
+      border: 1px solid #d6e6f7;
+      border-radius: 10px;
+      padding: 12px 8px;
+      text-align: center;
+    }
+    .day-date { font-weight: bold; color: #444; font-size: 14px; }
+    .day-icon { font-size: 32px; margin: 6px 0; }
+    .day-desc { font-size: 13px; color: #666; height: 34px; }
+    .day-temp { font-size: 18px; font-weight: bold; margin: 6px 0; }
+    .day-temp .high { color: #d9480f; }
+    .day-temp .low { color: #2b6cb0; }
+    .day-rain { font-size: 12px; color: #666; }
+
+    .loading { text-align: center; color: #777; padding: 20px; }
+    .error {
+      background-color: #fff5f5;
+      border: 2px solid #fc8181;
+      border-radius: 8px;
+      padding: 16px;
+      margin-top: 20px;
+      color: #c53030;
+      line-height: 1.7;
+    }
+    .api-note {
+      margin-top: 28px;
+      padding-top: 14px;
+      border-top: 1px solid #eee;
+      font-size: 12px;
+      color: #999;
+      line-height: 1.8;
+    }
+    .api-note a { color: #2b6cb0; }
+  </style>
+</head>
+<body>
+  <div class="container">
+
+    <h1>🌤️ 台灣天氣查詢</h1>
+    <p class="subtitle">選擇縣市，查看目前天氣與未來幾天預報</p>
+
+    <!-- 選擇縣市 + 查詢按鈕 -->
+    <div class="controls">
+      <label for="citySelect">縣市：</label>
+      <select id="citySelect">
+        <option value="0">台北市</option>
+        <option value="1">新北市</option>
+        <option value="2">基隆市</option>
+        <option value="3">桃園市</option>
+        <option value="4">新竹市</option>
+        <option value="5">新竹縣</option>
+        <option value="6">苗栗縣</option>
+        <option value="7">台中市</option>
+        <option value="8">彰化縣</option>
+        <option value="9">南投縣</option>
+        <option value="10">雲林縣</option>
+        <option value="11">嘉義市</option>
+        <option value="12">嘉義縣</option>
+        <option value="13">台南市</option>
+        <option value="14">高雄市</option>
+        <option value="15">屏東縣</option>
+        <option value="16">宜蘭縣</option>
+        <option value="17">花蓮縣</option>
+        <option value="18">台東縣</option>
+        <option value="19">澎湖縣</option>
+        <option value="20">金門縣</option>
+        <option value="21">連江縣</option>
+      </select>
+      <button id="searchBtn" onclick="getWeather()">查詢天氣</button>
+    </div>
+
+    <!-- 查詢結果（由 JavaScript 填入） -->
+    <div id="resultArea"></div>
+    <div id="forecastArea"></div>
+
+    <a class="back-link" href="index.html">← 回到首頁</a>
+
+    <div class="api-note">
+      天氣資料來源：<a href="https://open-meteo.com/" target="_blank" rel="noopener">Open-Meteo</a>
+      （免費 API，不需要註冊、不需要金鑰）<br>
+      網站架放：GitHub Pages（免費）
+    </div>
+
+  </div>
+
+  <script src="weather.js"></script>
+</body>
+</html>
